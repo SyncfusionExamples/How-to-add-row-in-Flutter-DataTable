@@ -1,8 +1,11 @@
-The Syncfusion Flutter DataTable  widget provides the support to add the row at run time.
-The following steps explains how to add row at run time in Flutter DataTable,
-STEP 1
-Create a data source class by extends DataGridSource for mapping data to the SfDataGrid.
+## How to add row in Flutter DataTable (SfDataGrid)?
 
+The Syncfusion Flutter DataTable  widget provides the support to add the row at run time.
+
+The following steps explains how to add row at run time in Flutter DataTable,
+## STEP 1
+Create a data source class by extends DataGridSource for mapping data to the SfDataGrid.
+```xml
 class EmployeeDataSource extends DataGridSource {
 
   EmployeeDataSource({required List<Employee> employeeData}) {
@@ -44,10 +47,11 @@ class EmployeeDataSource extends DataGridSource {
     notifyListeners();
   }
 }
-
-STEP 2
+```
+## STEP 2
 Wrap the SfDataGrid inside the Expanded widget and initialize the SfDataGrid widget with all the required properties. Wrap the expanded widget inside the column widget. Add the row to collection from onPressed of MaterialButton. In this call back we are called notifyListener method after the row is added to the collection.
 
+```xml
 @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,5 +109,6 @@ Wrap the SfDataGrid inside the Expanded widget and initialize the SfDataGrid wid
       ]),
     );
   }
+```
 
 
