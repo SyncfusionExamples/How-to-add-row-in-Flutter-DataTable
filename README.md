@@ -1,35 +1,38 @@
-## How to add row in Flutter DataTable (SfDataGrid)?
+# How to add row in Flutter DataTable (SfDataGrid)
 
-The Syncfusion Flutter DataTable  widget provides the support to add the row at run time.
+The Syncfusion Flutter DataTable  widget provides the support to perform the CRUD operation at run time. DataGridSource class is listenable. You should call notifyListeners method to refresh the DataGrid whenever the CRUD operation is performed.
 
-The following steps explains how to add row at run time in Flutter DataTable,
+The following steps explains how to add a row at run time in Flutter DataTable,
+
 ## STEP 1
-Create a data source class by extends DataGridSource for mapping data to the SfDataGrid.
+Create a data source class by extends DataGridSource for mapping data to the SfDataGrid. Since the notifyListeners method is protected, you have to create new method as public and call the notifyListeners method inside from new method. Also, created method named updateDataGridRows to recreate the DataGridRow collection based on CRUD operation.
+
 ```xml
 class EmployeeDataSource extends DataGridSource {
-
-  EmployeeDataSource({required List<Employee> employeeData}) {
-    _employee = employeeData;
-    updateDataGridRow();
+  EmployeeDataSource({required List<Employee> employees}) {
+    _employees = employees;
+    updateDataGridRows();
   }
 
-  List<DataGridRow> _employeeData = [];
-  late List<Employee> _employee;
+  List<DataGridRow> dataGridRow = [];
+  late List<Employee> _employees;
+  Color? rowBackgroundColor;
 
-  void updateDataGridRow() {
-    _employeeData = _employee
-        .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<int>(columnName: 'id', value: e.id),
-              DataGridCell<String>(columnName: 'name', value: e.name),
+  void updateDataGridRows() {
+    dataGridRow = _employees
+        .map<DataGridRow>((dataGridRow) => DataGridRow(cells: [
+              DataGridCell<int>(columnName: 'id', value: dataGridRow.id),
+              DataGridCell<String>(columnName: 'name', value: dataGridRow.name),
               DataGridCell<String>(
-                  columnName: 'designation', value: e.designation),
-              DataGridCell<int>(columnName: 'salary', value: e.salary),
+                  columnName: 'designation', value: dataGridRow.designation),
+              DataGridCell<int>(
+                  columnName: 'salary', value: dataGridRow.salary),
             ]))
         .toList();
   }
 
   @override
-  List<DataGridRow> get rows => _employeeData;
+  List<DataGridRow> get rows => dataGridRow;
 
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
@@ -37,7 +40,7 @@ class EmployeeDataSource extends DataGridSource {
         cells: row.getCells().map<Widget>((e) {
       return Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Text(e.value.toString()),
       );
     }).toList());
@@ -48,11 +51,14 @@ class EmployeeDataSource extends DataGridSource {
   }
 }
 ```
+
 ## STEP 2
-Wrap the SfDataGrid inside the Expanded widget and initialize the SfDataGrid widget with all the required properties. Wrap the expanded widget inside the column widget. Add the row to collection from onPressed of MaterialButton. In this call back we are called notifyListener method after the row is added to the collection.
+Wrap the SfDataGrid inside the Expanded widget and initialize the SfDataGrid widget with all the required properties. Wrap the Expanded widget inside the column widget.
+
+On button pressed callback, new row is added and public method which is added in DataGridSource class and updateDataGridRows method is called.
 
 ```xml
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -62,9 +68,9 @@ Wrap the SfDataGrid inside the Expanded widget and initialize the SfDataGrid wid
         MaterialButton(
           color: Colors.blue,
           onPressed: () {
-            employeeDataSource._employee
+            employeeDataSource._employees
                 .add(Employee(10015, 'Grimes', 'Developer', 15000));
-            employeeDataSource.updateDataGridRow();
+            employeeDataSource.updateDataGridRows();
             employeeDataSource.updateDataGridSource();
           },
           child: Text('Add Row'),
@@ -108,7 +114,7 @@ Wrap the SfDataGrid inside the Expanded widget and initialize the SfDataGrid wid
         ),
       ]),
     );
-  }
+  } 
 ```
 
-
+**[View document in Syncfusion Flutter Knowledge base](https://www.syncfusion.com/kb/12517/how-to-add-row-in-flutter-datatable-sfdatagrid)**
