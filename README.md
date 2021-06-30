@@ -80,7 +80,7 @@ On button pressed callback, new row is added and public method which is added in
             source: employeeDataSource,
             columnWidthMode: ColumnWidthMode.fill,
             columns: <GridColumn>[
-              GridTextColumn(
+             GridColumn(
                   columnName: 'id',
                   label: Container(
                       padding: EdgeInsets.all(16.0),
@@ -88,13 +88,13 @@ On button pressed callback, new row is added and public method which is added in
                       child: Text(
                         'ID',
                       ))),
-              GridTextColumn(
+             GridColumn(
                   columnName: 'name',
                   label: Container(
                       padding: EdgeInsets.all(8.0),
                       alignment: Alignment.center,
                       child: Text('Name'))),
-              GridTextColumn(
+             GridColumn(
                   columnName: 'designation',
                   label: Container(
                       padding: EdgeInsets.all(8.0),
@@ -103,7 +103,7 @@ On button pressed callback, new row is added and public method which is added in
                         'Designation',
                         overflow: TextOverflow.ellipsis,
                       ))),
-              GridTextColumn(
+              GridColumn(
                   columnName: 'salary',
                   label: Container(
                       padding: EdgeInsets.all(8.0),
